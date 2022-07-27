@@ -57,6 +57,8 @@ Cypress.Commands.add('genCode', (phone, role, stand) => {
     })
 })
 
+
+
 Cypress.Commands.add('getAuthCode', (phone, role, stand) => {
 
     cy.request({

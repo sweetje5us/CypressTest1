@@ -5,7 +5,7 @@ module.exports = defineConfig({
     setupNodeEvents(on, config) {
       
     },
-    baseUrl: 'https://dev-crm.okolo.app/auth',
+    baseUrl: 'https://dev-crm.okolo.app/',
     specPattern: '**/examples/*',
   },
 });
