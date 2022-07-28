@@ -43,7 +43,7 @@
 // Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
 
 
-
+import 'cypress-file-upload';
 
 // Authorization 
 Cypress.Commands.add('genCode', (phone, role, stand) => {
@@ -88,6 +88,8 @@ Cypress.Commands.add('getCrmToken', (phone, role, stand) => {
         })
     })
 })
+
+
 
 Cypress.Commands.add('getMobileToken', (phone, role, stand) => {
     cy.genCode(phone, role, stand).then(() => {
