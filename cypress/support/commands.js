@@ -68,6 +68,26 @@ Cypress.Commands.add('missedCall', (phone1, phone2, randomPassword, stand) => {
     })
 })
 
+Cypress.Commands.add('createIncident', (token, incident_data) => {
+    cy.request({
+        method: 'POST',
+        url: `https://dev-incidents.okolo.app/api/v1/incidents/create`,
+        
+        headers: {
+            'app-token': `${token}`    
+          },
+        body: {
+            "order_id": `${incident_data.order_id}`,
+             "type": "collect",
+             "problem": `${incident_data.type}`,
+             "channel": "feedback",
+             "comment": `${incident_data.comment}`,
+             "user_type": "operator"
+        
+        }
+    })
+})
+
 Cypress.Commands.add('getAuthCode', (phone, role, stand) => {
 
     cy.request({
