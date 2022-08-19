@@ -57,7 +57,16 @@ Cypress.Commands.add('genCode', (phone, role, stand) => {
     })
 })
 
+Cypress.Commands.add('missedCall', (phone1, phone2, randomPassword, stand) => {
 
+    cy.request({
+        method: 'POST',
+        url: `https://${stand}.okolo.app/events/summary`,
+        body: {
+            "json": `{\"call_direction\":1,\"entry_result\":0,\"from\":{\"number\":\"${phone1}\"},\"to\":{\"extension\":\"15589\"},\"line_number\":\"${phone2}\",\"entry_id\":\"${randomPassword}\"}`
+        }
+    })
+})
 
 Cypress.Commands.add('getAuthCode', (phone, role, stand) => {
 
