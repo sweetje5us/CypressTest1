@@ -24,6 +24,9 @@ describe('PushNotifications', ()=>{
     })
 it('First case', ()=>{
     // cy.get('[data-cy="tab-manual"]').click() // отправка вручную
+    if (cy.get('.modal-layout').should('be.visible')) {
+        cy.get('.basis-button--type_secondary').click()
+    }
 
     cy.get('[placeholder="Не более 37 символов с пробелами"][data-v-6f48a0b5]')
     .type(push.title) // значение заголовка пуша
