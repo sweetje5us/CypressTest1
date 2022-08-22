@@ -48,10 +48,6 @@ it('First case', ()=>{
         .contains("Файл загружен")
 
     }
-    
-
-   
-
     cy.get('[placeholder="Ссылка для пуш-уведомления"][data-v-6f48a0b5]')
     .type(push.link) // значение ссылки пуша
     if (push.is_external){
