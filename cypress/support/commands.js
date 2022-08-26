@@ -44,6 +44,7 @@
 
 
 import 'cypress-file-upload';
+const filename = '/path/to/tokens.json'
 
 // Authorization 
 Cypress.Commands.add('genCode', (phone, role, stand) => {
@@ -69,6 +70,7 @@ Cypress.Commands.add('missedCall', (phone1, phone2, randomPassword, stand) => {
 })
 
 Cypress.Commands.add('createIncident', (token, incident_data) => {
+    
     cy.request({
         method: 'POST',
         url: `https://dev-incidents.okolo.app/api/v1/incidents/create`,
@@ -77,12 +79,13 @@ Cypress.Commands.add('createIncident', (token, incident_data) => {
             'app-token': `${token}`    
           },
         body: {
+            "source": `${incident_data.source}`,
             "order_id": `${incident_data.order_id}`,
-             "type": "collect",
-             "problem": `${incident_data.type}`,
-             "channel": "feedback",
+             "type":  `${incident_data.type}`,
+             "problem": `${incident_data.problem}`,
+             "channel":  `${incident_data.channel}`,
              "comment": `${incident_data.comment}`,
-             "user_type": "operator"
+             "user_type":  `${incident_data.user_type}`
         
         }
     })
@@ -113,7 +116,13 @@ Cypress.Commands.add('getCrmToken', (phone, role, stand) => {
                     phone: phone,
                     app: 'crm'
                 }
-            })
+            }
+           )
+           .then(response => {
+            
+            Cypress.env("tokens", response.body.session.token)
+            
+        })
         })
     })
 })
@@ -138,6 +147,8 @@ Cypress.Commands.add('getMobileToken', (phone, role, stand) => {
     })
 })
 
+
+
 Cypress.Commands.add('visitCrmPage', (phone, role, stand, route) => {
     let token
     let id
@@ -146,6 +157,7 @@ Cypress.Commands.add('visitCrmPage', (phone, role, stand, route) => {
         token = response.body.session.token,
         id = response.body.session.id,
         expires = response.body.session.expires
+        
     })
     cy.visit(`/${route}`, {
         onBeforeLoad(win) {
@@ -154,4 +166,24 @@ Cypress.Commands.add('visitCrmPage', (phone, role, stand, route) => {
             win.localStorage.id = id
         }
     })
+})
+
+Cypress.Commands.add('myOwnAuth', (phone, role, stand, route) => {
+    let token
+    let id
+    let expires
+    cy.getCrmToken(phone, role, stand).then(response => {
+        token = response.body.session.token,
+        id = response.body.session.id,
+        expires = response.body.session.expires
+        
+    })
+    cy.visit(`/${route}`, {
+        onBeforeLoad(win) {
+            win.localStorage.token = token
+            win.localStorage.expire_date = expires
+            win.localStorage.id = id
+        }
+    })
+    
 })

@@ -19,5 +19,11 @@ import './commands'
 export {default as pushs} from '../fixtures/Pages/pushNotification'
 export {default as banners} from '../fixtures/Pages/bannerPage'
 export {default as tickets} from '../fixtures/Pages/ticketPage'
+
+beforeEach(() => {
+ 
+    Cypress.env('tokens', []);
+
+});
 // Alternatively you can use CommonJS syntax:
 // require('./commands')
